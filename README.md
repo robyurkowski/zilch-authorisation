@@ -1,6 +1,6 @@
-# Zilch
+# Zilch-Authorisation
 
-Zilch is a zero dependency authorisation stub.
+Zilch-Authorisation is a zero dependency authorisation stub.
 
 The idea is that Zilch stands in for any authentication or authorisation calls
 that your application makes and fulfills them in the most basic way.
