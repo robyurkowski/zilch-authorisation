@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'zilch/version'
+require 'zilch/authorisation/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "zilch"
-  spec.version       = Zilch::VERSION
+  spec.name          = "zilch-authorisation"
+  spec.version       = Zilch::Authorisation::VERSION
   spec.authors       = ["Rob Yurkowski", "Philip Arndt"]
   spec.email         = ["rob@yurkowski.net", "p@arndt.io"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
