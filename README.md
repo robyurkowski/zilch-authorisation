@@ -31,19 +31,19 @@ In the case that your application needs to find the first user,
 you can find that user by implementing the primary_user method:
 
 ```ruby
-Zilch::UsersManager.instance.primary_user
+Zilch::UsersManager.new.primary_user
 ```
 
 To authenticate:
 
 ```ruby
-Zilch::AuthorisationManager.instance.authenticate!
+Zilch::AuthorisationManager.new.authenticate!
 ```
 
 To find the current role:
 
 ```ruby
-Zilch::AuthorisationManager.instance.has_role?(role)
+Zilch::AuthorisationManager.new.has_role?(role)
 ```
 
 ## Contributing
