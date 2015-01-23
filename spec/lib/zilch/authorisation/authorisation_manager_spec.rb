@@ -2,49 +2,96 @@ require "spec_helper"
 require "zilch/authorisation/authorisation_manager"
 
 RSpec.describe Zilch::Authorisation::AuthorisationManager do
+  let(:adapter) { double("NewAdapter") }
+
   describe "authentication" do
-    let(:user) { double("user") }
+    before do
+      subject.adapter = adapter
+    end
 
-    context "when can find a user" do
+    describe "#authenticate" do
+      it "asks the adapter" do
+        expect(adapter).to receive(:authenticate)
+        subject.authenticate
+      end
+    end
+
+
+    describe "#authenticated?" do
+      it "asks the adapter" do
+        expect(adapter).to receive(:authenticated?)
+        subject.authenticated?
+      end
+    end
+
+
+    describe "#current_user" do
+      it "asks the adapter" do
+        expect(adapter).to receive(:current_user)
+        subject.current_user
+      end
+    end
+
+
+    describe "#allow?" do
+      it "asks the adapter" do
+        expect(adapter).to receive(:allow?)
+        subject.allow?
+      end
+    end
+
+
+    describe "#authenticate!" do
+      it "asks the adapter" do
+        allow(adapter).to receive(:current_user)
+        expect(adapter).to receive(:authenticate!).and_return true
+        subject.authenticate!
+      end
+
+      context "when not authenticated" do
+        it "throws an exception" do
+          allow(adapter).to receive(:authenticate!).and_return false
+          expect { subject.authenticate! }.to raise_exception Zilch::Authorisation::NotAuthorisedException
+        end
+      end
+
+      context "when authenticated" do
+        it "returns the current user" do
+          allow(adapter).to receive(:authenticate!).and_return true
+          expect(adapter).to receive(:current_user)
+          subject.authenticate!
+        end
+      end
+    end
+  end
+
+
+  describe "#adapter" do
+    context "when given an adapter" do
       before do
-        allow(subject).to receive_message_chain('user_factory.call').and_return user
+        subject.adapter = adapter
       end
 
-      describe "#authenticate" do
-        it "#returns true" do
-          expect(subject.authenticate).to be true
-        end
-
-        it "sets the current user" do
-          subject.authenticate
-          expect(subject.current_user).to eq user
-        end
+      it "uses that adapter" do
+        expect(subject.adapter).to eq(adapter)
       end
     end
 
-    context "when cannot find a user" do
-    end
-
-    context "when could not set a current user" do
-    end
-
-    it "gives access to a current_user" do
-      user = double("User")
-      user_factory = double("User factory", call: user)
-
-      allow(subject).to receive(:user_factory).and_return(user_factory)
-      expect(subject.current_user).to eq(user)
-    end
-
-    describe "permissions" do
-      it "is authenticated by default" do
-        expect(subject.authenticate).to be_truthy
-        expect(subject.authenticated?).to be_truthy
+    context "when not given an adapter" do
+      it "calls the default proc" do
+        default_adapter = double("DefaultAdapter")
+        allow(subject).to receive(:default_adapter).and_return(default_adapter)
+        expect(subject.adapter).to eq(default_adapter)
       end
+    end
+  end
 
-      it "allows access to action" do
-        expect(subject.allow?(:do_something)).to be true
-      end
+
+  describe "#adapter=" do
+    it "allows the adapter to be set" do
+      adapter = double("NewAdapter")
+      subject.adapter = adapter
+      expect(subject.adapter).to eq(adapter)
     end
   end
 end

@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Zilch::Authorisation::VERSION
   spec.authors       = ["Rob Yurkowski", "Philip Arndt"]
   spec.email         = ["rob@yurkowski.net", "p@arndt.io"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{A zero-dependency authorisation stub}
+  spec.description   = %q{A zero-dependency authorisation stub}
+  spec.homepage      = "https://github.com/robyurkowski/zilch-authorisation"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
