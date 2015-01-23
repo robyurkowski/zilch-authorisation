@@ -2,9 +2,9 @@ require "spec_helper"
 require "zilch/authorisation/authorisation_manager"
 
 RSpec.describe Zilch::Authorisation::AuthorisationManager do
-  let(:adapter) { double("NewAdapter") }
-
   describe "authentication" do
+    let(:adapter) { double("NewAdapter") }
+
     before do
       subject.adapter = adapter
     end
@@ -65,33 +65,7 @@ RSpec.describe Zilch::Authorisation::AuthorisationManager do
     end
   end
 
-
-  describe "#adapter" do
-    context "when given an adapter" do
-      before do
-        subject.adapter = adapter
-      end
-
-      it "uses that adapter" do
-        expect(subject.adapter).to eq(adapter)
-      end
-    end
-
-    context "when not given an adapter" do
-      it "calls the default proc" do
-        default_adapter = double("DefaultAdapter")
-        allow(subject).to receive(:default_adapter).and_return(default_adapter)
-        expect(subject.adapter).to eq(default_adapter)
-      end
-    end
-  end
-
-
-  describe "#adapter=" do
-    it "allows the adapter to be set" do
-      adapter = double("NewAdapter")
-      subject.adapter = adapter
-      expect(subject.adapter).to eq(adapter)
-    end
+  describe "adapter" do
+    it_behaves_like "zilch adapter"
   end
 end

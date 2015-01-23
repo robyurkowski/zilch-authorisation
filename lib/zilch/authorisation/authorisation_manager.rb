@@ -3,16 +3,15 @@ require 'forwardable'
 
 module Zilch
   module Authorisation
-    # Zero-dependency authorisation stub for Rails engines. Provides the
-    # capability to refer to a generic adapter with consistent interface and
-    # to specify an adapter (provided by a separate package) to define
-    # implementation details for any potential provider.
+    # Interface for interacting with authentication and authorisation.
     #
     # @since x.x.x
     class AuthorisationManager
       extend Forwardable
 
+
       def_delegators :adapter, :authenticate, :authenticated?, :current_user, :allow?
+
 
       # Exception-raising version of `#authenticate`. Raise if not
       # authenticated.
@@ -27,7 +26,6 @@ module Zilch
       # Reader for the adapter which implements this interface.
       #
       # @since x.x.x
-
       def adapter
         @adapter ||= default_adapter
       end
@@ -39,8 +37,8 @@ module Zilch
       # @since x.x.x
       attr_writer :adapter
 
-      # Defines the proc that is `called` in order to retrieve an adapter
-      # that should be used to fulfill the interface.
+
+      # Specifies the default adapter to use.
       #
       # @since x.x.x
       def default_adapter

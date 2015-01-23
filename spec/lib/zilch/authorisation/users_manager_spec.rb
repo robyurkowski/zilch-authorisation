@@ -2,11 +2,22 @@ require "spec_helper"
 require "zilch/authorisation/users_manager"
 
 RSpec.describe Zilch::Authorisation::UsersManager do
-  it "has a primary user" do
-    expect(subject).to respond_to(:primary_user)
+  describe "users" do
+    let(:adapter) { double("NewAdapter") }
+
+    before do
+      subject.adapter = adapter
+    end
+
+    describe "primary user" do
+      it "asks the adapter" do
+        expect(adapter).to receive(:primary_user)
+        subject.primary_user
+      end
+    end
   end
 
-  it "expects an unmodified primary user to cause an exception" do
-    expect { subject.primary_user }.to raise_error
+  describe "adapter" do
+    it_behaves_like "zilch adapter"
   end
 end
