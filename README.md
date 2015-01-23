@@ -1,13 +1,15 @@
 # Zilch-Authorisation
 
-Zilch-Authorisation is a zero dependency authorisation stub.
+Zilch-Authorisation is a zero-dependency authorisation interface.
 
 The idea is that Zilch stands in for any authentication or authorisation calls
-that your application makes and fulfills them in the most basic way.
+that your application makes and fulfills them by passing them to a registered
+adapter that implements its interface with common libraries.
 
 Once you are ready to implement a different authentication and/or authorisation
-mechanism, you can write an adapter that overrides the modules and methods that
-Zilch provides to behave in a different way.
+mechanism, you can write an adapter that implements the interfaces that Zilch
+provides. In this way, you can easily swap out implementation details and not
+affect your code.
 
 ## Installation
 
@@ -20,31 +22,6 @@ gem 'zilch', '~> 1.0'
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install zilch
-
-## Usage
-
-In the case that your application needs to find the first user,
-you can find that user by implementing the primary_user method:
-
-```ruby
-Zilch::UsersManager.new.primary_user
-```
-
-To authenticate:
-
-```ruby
-Zilch::AuthorisationManager.new.authenticate!
-```
-
-To find the current role:
-
-```ruby
-Zilch::AuthorisationManager.new.has_role?(role)
-```
 
 ## Contributing
 
