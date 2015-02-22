@@ -1,5 +1,5 @@
 require 'forwardable'
-# require 'zilch-authorisation/adaptors/default'
+require 'zilch/authorisation/adapters/default'
 
 module Zilch
   module Authorisation
@@ -18,8 +18,8 @@ module Zilch
       #
       # @since x.x.x
       def authenticate!
-        raise Zilch::Authorisation::NotAuthorisedException unless @adapter.authenticate!
-        @adapter.current_user
+        raise Zilch::Authorisation::NotAuthorisedException unless adapter.authenticate!
+        adapter.current_user
       end
 
 
@@ -32,7 +32,7 @@ module Zilch
 
 
       # Setter for the adapter which implements the interface. The given
-      # adapter must respond to 
+      # adapter must respond to
       #
       # @since x.x.x
       attr_writer :adapter
